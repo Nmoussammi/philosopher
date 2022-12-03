@@ -6,7 +6,7 @@
 /*   By: nmoussam <nmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 21:03:41 by nmoussam          #+#    #+#             */
-/*   Updated: 2022/12/03 21:55:03 by nmoussam         ###   ########.fr       */
+/*   Updated: 2022/12/04 00:28:30 by nmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,24 @@ int check_meals(t_philos *philos)
 	int i;
 
 	i = 0;
-	while (i < philos->info->nb_philos)
+	while (i < philos->info->nb_philos && philos->info->nb_eat > 0)
 	{
 		if (philos[i].nb_meals <= philos->info->nb_eat)
 		{
 			philos->died = 1;
+			pthread_mutex_lock(&philos->info->msg);
+			printf("everyone eat\n");
+			pthread_mutex_unlock(&philos->info->msg);
 			return (0);
 		}
 		i++;
 	}
-	print_msg(philos, "everyone eat");
+
 	return (1);
 }
-void *check_end(void *args)
+int check_end(t_philos * philos)
 {
 	int i;
-	t_philos		*philos;
-
-	philos = (t_philos *)args;
 
 	i = 0;
 	while (i < philos->info->nb_philos)
@@ -80,7 +80,7 @@ void *check_end(void *args)
 			return (0);
 		i++;
 	}
-	return (NULL);
+	return (1);
 }
 
 
@@ -95,7 +95,6 @@ int	ft_begin(t_infos *info, pthread_mutex_t *forks)
 	pthread_mutex_init(&info->msg, NULL);
 	ft_init_philos(philos, info);
 	i = 0;
-	pthread_create(&info->check, NULL, &check_end, &philos);
 	while (i < info->nb_philos)
 	{
 		get_forks(&philos[i], i, forks, info->nb_philos);
@@ -103,7 +102,8 @@ int	ft_begin(t_infos *info, pthread_mutex_t *forks)
 			return (0);
 		i++;
 	}
-	
+	if (check_end(philos) == 0)
+		return (0);
 	return (1);
 } 
 

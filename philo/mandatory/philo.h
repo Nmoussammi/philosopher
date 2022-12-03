@@ -6,7 +6,7 @@
 /*   By: nmoussam <nmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 14:05:13 by nmoussam          #+#    #+#             */
-/*   Updated: 2022/12/03 21:43:14 by nmoussam         ###   ########.fr       */
+/*   Updated: 2022/12/04 00:18:19 by nmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	*routine(void *args);
 int	ft_begin(t_infos *info, pthread_mutex_t *forks);
 int check_meals(t_philos *philos);
 int check_philos(t_infos *info);
-void *check_end(void *args);
+int check_end(t_philos * philos);
 int philo_died(t_philos *philos);
 
 
