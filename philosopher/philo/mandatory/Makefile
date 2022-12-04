@@ -6,15 +6,21 @@
 #    By: nmoussam <nmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/30 14:03:43 by nmoussam          #+#    #+#              #
-#    Updated: 2022/12/03 15:24:53 by nmoussam         ###   ########.fr        #
+#    Updated: 2022/12/04 21:35:05 by nmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 INC  = philo.h
-SRCS = 	main.c ft_check_args.c get_forks.c start_lunch.c
+SRCS = 	begin.c \
+		check_end_simulation.c \
+		check_init_args.c \
+		forks_init_mutex.c \
+		main.c \
+		routine.c \
+		utils.c
 OBJS = $(SRCS:.c=.o)
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread -g
 CC = cc
 RM = rm -rf
 
